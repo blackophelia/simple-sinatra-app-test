@@ -1,0 +1,13 @@
+rea_test::common::application_group:    'appgroup'
+rea_test::common::application_user:     'appuser'
+
+rea_test::common::web_server_group:     'webgroup'
+rea_test::common::web_server_user:      'webuser'
+
+rea_test::common::application_name:     'simple-sinatra-app'
+rea_test::common::application_base_dir: '/usr/local/applications'
+
+rea_test::system::host_ip:              '172.16.1.57'
+
+rea_test::system::passenger_root:       '/usr/lib/ruby/gems/1.8/gems/passenger-5.0.6'
+rea_test::system::ruby_home:            '/usr/bin/ruby'

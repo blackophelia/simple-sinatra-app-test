@@ -1,25 +1,24 @@
-# simple-sinatra-app-test
+REA Deployment Test
 
-## REA Deployment Test Notes
+Preconditions/Assumptions
+- used Vagrant/VirtualBox on OSX to spin up a CentOS 6.6.4 VM.
+- downloaded base virtual box image https://vagrantcloud.com/puppetlabs/boxes/centos-6.6-64-puppet
+- using default ruby (ruby 1.8.7 (2013-06-27 patchlevel 374) [x86_64-linux])/puppet (3.7.4) installed
+- developed manifests using puppet standalone on the VM, rather than Vagrant provisioning.
+- Ran into an issue with Ruby/Passenger version incompatibility (Appendix A).  Decided to proceed to code and demonstrate test requirements, rather than fix the issue.  As a result, this won't strictly be working codek once checked out. Httpd also fails to start because the installation of mod_passenger failed, and config is present to include/load it.
 
-### Preconditions/Assumptions
-- I used Vagrant/VirtualBox on OSX to spin up a CentOS 6.6.4 VM, using the virtual box image https://vagrantcloud.com/puppetlabs/boxes/centos-6.6-64-puppet
-- Used default ruby (ruby 1.8.7 (2013-06-27 patchlevel 374) [x86_64-linux])/puppet (3.7.4) installed by default on the CentOS box
-- I developed manifests using puppet standalone on the VM, rather than Vagrant provisioning.
-- I ran into an issue with Ruby/Passenger version incompatibility (Appendix A).  Decided to proceed with an alternative workaround, rather than try and downgrade ruby to the required patch level
 
-
-### Security Considerations
+Security
 - I would expect in a real environment, these packages and gems being installed would be located in a local repo/cache somewhere.  Upside is not having to download from the internet, versions can be frozen and managed carefully, avoiding erroneous version updates.
 - Things like yum.conf could be locked down to disable/remove any default repositories, no direct access to the net, and use local repositories. Security with GPG key checking could be added to ensure only properly signed packages are installed.
-- Default apache httpd.conf has been modified, with my edits have a '# JG edit' comment above them, and the original is commented out
+- apache httpd.conf edited, my edits have a '# JG edit' comment above them, and the original is commented out
+- appserver and application files owned by a different user
 - I havent done it with this example, but actions relating to starting/stopping services (app/web) could be restricted with specific sudo commands, if it was required.
 
 
 
-###Appendix A - ruby/passenger incompatibility
+Appendix A - ruby/passenger incompatibility
 
-```bash
 [root@localhost modules]# puppet apply site.pp
 Notice: Compiled catalog for localhost.home.gateway in environment production in 0.65 seconds
 Notice: in system
@@ -58,4 +57,3 @@ Error: Package: 1:rubygem-passenger-native-libs-3.0.19-1.el6_1.8.7.352.x86_64 (p
  You could try using --skip-broken to work around the problem
  You could try running: rpm -Va --nofiles --nodigest
 Notice: Finished catalog run in 8.41 seconds
-```

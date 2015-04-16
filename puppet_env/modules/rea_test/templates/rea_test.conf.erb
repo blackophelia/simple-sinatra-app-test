@@ -1,0 +1,19 @@
+#Listen 80
+#NameVirtualHost <%= @host_ip %>:80
+
+LoadModule passenger_module <%= @passenger_root %>/buildout/apache2/mod_passenger.so
+<IfModule mod_passenger.c>
+    PassengerRoot <%= @passenger_root %>
+    PassengerDefaultRuby <%= @ruby_home %>
+</IfModule>
+
+<VirtualHost <%= @host_ip %>:80>
+    ServerName <%= @host_ip %>
+    DocumentRoot <%= @application_base_dir %>/<%= @application_name %>/public
+    <Directory <%= @application_base_dir %>/<%= @application_name %>/public>
+        Allow from all
+        Options -MultiViews
+        Options Indexes
+        AuthType None
+    </Directory>
+</VirtualHost>
